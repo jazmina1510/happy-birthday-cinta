@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Cinta</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff8fab, #ffc2d1, #bde0fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 430px;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .envelope {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      margin: 40px auto;
+      background: #ff4d6d;
+      border-radius: 0 0 18px 18px;
+      cursor: pointer;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+      transition: 0.5s;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-top: 100px solid #ff758f;
+      transform-origin: top;
+      transition: 0.8s;
+    }
+
+    .letter {
+      position: absolute;
+      left: 25px;
+      bottom: 10px;
+      width: 230px;
+      height: 140px;
+      background: white;
+      color: #ff4d6d;
+      border-radius: 12px;
+      padding: 18px;
+      transform: translateY(50px);
+      opacity: 0;
+      transition: 1s;
+      font-weight: bold;
+    }
+
+    .open .flap {
+      transform: rotateX(180deg);
+    }
+
+    .open .letter {
+      transform: translateY(-120px);
+      opacity: 1;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 13px 25px;
+      border: none;
+      border-radius: 30px;
+      background: #ff006e;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    button:hover {
+      transform: scale(1.07);
+    }
+
+    .surprise {
+      display: none;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(14px);
+      border-radius: 25px;
+      padding: 25px;
+      animation: fadeIn 1s ease;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    }
+
+    .photo {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid white;
+      margin-bottom: 15px;
+    }
+
+    .finalText {
+      display: none;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      animation: fadeIn 1s ease;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: float 5s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" id="main">
+    <h1>Untuk Cinta Saya 💌</h1>
+    <p>Tekan sampul ni perlahan-lahan...</p>
+
+    <div class="envelope" onclick="openEnvelope()">
+      <div class="flap"></div>
+      <div class="letter">
+        Happy Birthday Cinta 🎂  
+        <br><br>
+        Ada surprise untuk awak...
+      </div>
+    </div>
+
+    <button onclick="showSurprise()">Buka Surprise 🎁</button>
+  </div>
+
+  <div class="container surprise" id="surprise">
+    <img src="gambar-dia.jpg" class="photo" alt="Gambar Sayang">
+
+    <h1>Happy Birthday, Cinta ❤️</h1>
+
+    <p>
+      Hari ini bukan hari biasa.  
+      Hari ini hari orang yang paling saya sayang lahir ke dunia.
+    </p>
+
+    <button onclick="showFinal()">Tekan Kalau Awak Sayang Saya 💕</button>
+
+    <p class="finalText" id="finalText">
+      Terima kasih sebab hadir dalam hidup saya.  
+      Saya doakan awak selalu bahagia, dimurahkan rezeki, dipermudahkan urusan,  
+      dan semua impian awak tercapai.  
+      <br><br>
+      Saya sayang awak sangat-sangat.  
+      Happy Birthday, my love 🎂💖
+    </p>
+  </div>
+
+  <script>
+    function openEnvelope() {
+      document.querySelector(".envelope").classList.add("open");
+    }
+
+    function showSurprise() {
+      document.getElementById("main").style.display = "none";
+      document.getElementById("surprise").style.display = "block";
+      confetti();
+    }
+
+    function showFinal() {
+      document.getElementById("finalText").style.display = "block";
+      confetti();
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    setInterval(createHeart, 400);
+
+    function confetti() {
+      for (let i = 0; i < 40; i++) {
+        const confetti = document.createElement("div");
+        confetti.innerHTML = "🎉";
+        confetti.style.position = "absolute";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.top = "-20px";
+        confetti.style.fontSize = "24px";
+        confetti.style.animation = "fall 3s linear";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+
+    const style = document.createElement("style");
+    style.innerHTML = `
+      @keyframes fall {
+        to {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+<div style="
+margin-top:20px;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+">
+
+  <button onclick="playMusic()">
+    🎵 Play Lagu
+  </button>
+
+  <button onclick="showVideo()">
+    🎥 Video Kita
+  </button>
+
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
+<div id="videoBox" style="display:none; margin-top:20px;">
+  <video width="100%" controls style="border-radius:20px;">
+    <source src="memories.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+function showVideo() {
+  document.getElementById("videoBox").style.display = "block";
+}
+</script>
+
+</body>
+</html>
